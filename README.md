@@ -26,9 +26,15 @@ Using the Bike class below, write code that demonstrates that it is a reference 
 
 ```swift
 class Bike {
-    var wheelNumber = 2
-    var hasBell = false
+var wheelNumber = 2
+var hasBell = false
 }
+
+var myBike = Bike()
+var stolenBike = myBike
+myBike.hasBell = true
+
+print(stolenBike.hasBell)
 ```
 
 ## Question 3
@@ -37,35 +43,74 @@ a. Given the Animal class below, create a Bird subclass with a new `canFly` prop
 
 ```swift
 class Animal {
-    var name: String = ""
-    var printDescription() {
-        print("I am an animal named \(name)")
-    }
+var name: String = ""
+
+init(name: String) {
+self.name = name
 }
+
+func printDescription() {
+print("I am an animal named \(name)")
+}
+}
+
+class Bird: Animal {
+var canFly: Bool
+
+init(canfly: Bool, name: String) {
+self.canFly = canfly
+super.init(name: name)
+}
+//b. Override the printDescription method to have the instance of the Bird object print out its name and whether it can fly
+override func printDescription() {
+if canFly == true {
+print("I am an animal named \(name), and I can fly")
+} else {
+print("I am an animal named \(name) and I'm grounded")
+}
+}
+}
+
+var penguin = Bird.init(canfly: false, name: "Penguin")
+penguin.printDescription()
 ```
 
-b. Override the printDescription method to have the instance of the Bird object print out its name and whether it can fly
 
 
 ## Question 4
 
 ```swift
-class Bike {
-  let wheelNumber = 2
-  let wheelWidth = 1.3
-  var hasBell = true
-  func ringBell() {
-    if hasBell {
-      print("Ring!")
-    }
-  }
+class Bike4 {
+let wheelNumber = 2
+let wheelWidth = 1.3
+var hasBell = true
+
+func ringBell() {
+if hasBell {
+print("Ring!")
 }
+}
+}
+
+class LoudBike:Bike4 {
+
+//a. Create a `LoudBike` subclass of Bike.  When you call `ringBell` it should ring the bell in all caps.
+override func ringBell() {
+print("RING!!!!!!!!!!!!!!")
+}
+
+
+//b. Give `LoudBike` a new method called `ringBell(times:)` that rings the bell a given number of times
+func ringBell(times: Int) {
+for _ in 1...times {
+print("RING!!!!!!!!!!!!!!!!!!!!!!")
+}
+}
+}
+
+var myStolenBike = LoudBike.init()
+myStolenBike.ringBell(times: 2)
 ```
-
-
-a. Create a `LoudBike` subclass of Bike.  When you call `ringBell` it should ring the bell in all caps.
-
-b. Give `LoudBike` a new method called `ringBell(times:)` that rings the bell a given number of times
 
 
 ## Question 5
@@ -88,8 +133,74 @@ d. Create a class `Rectangle` that subclasses from `Shape`.  Give it a `width` p
 
 e. Override the `name` property of `Rectangle` so that it returns a String containing its name ("Rectangle") and its area and perimeter.
 
-f. (BONUS) What happens when you run the code below?  Explain why.
+```swift
 
+class Shape {
+var name: String { return "This is a generic shape" }
+var area: Double { fatalError("Subclasses must override the area") }
+var perimeter: Double { fatalError("Subclasses must override the perimeter") }
+}
+//a. Given the `Shape` object above, create a subclass `Square` with a property `sideLength` with a default value of 5.
+
+class Square: Shape {
+var sideLength = 5
+
+//b. Override the `area` and `perimeter` computed values so the return the area/perimeter of the square as appropriate
+override var area: Double {
+get {
+return Double(sideLength) * Double(sideLength)
+}
+}
+
+override var perimeter: Double{
+get {
+return Double(sideLength) * 4
+}
+}
+//    c. Override the `name` property of `Square` so that it returns a String containing its name ("Square") and its area and perimeter
+
+override var name: String {
+get {
+return "Hey, I'm a square, and my area is \(area), and my perimeter is \(perimeter)."
+}
+}
+}
+
+var myFavoriteShape = Square.init()
+
+myFavoriteShape.name
+
+//d. Create a class `Rectangle` that subclasses from `Shape`.  Give it a `width` property with a default value of 6 and a `height` property with a default value of 4
+
+class Rectangle: Shape {
+var width = 6
+var height = 4
+
+override var area: Double {
+get {
+return Double(width) * Double(height)
+}
+}
+
+override var perimeter: Double {
+get {
+return Double(width * 2) + Double(height * 2)
+}
+}
+// e. Override the `name` property of `Rectangle` so that it returns a String containing its name ("Rectangle") and its area and perimeter.
+override var name: String {
+get {
+return "Hey, I'm a rectangle I'm cool, and my area is \(area), and my perimeter is \(perimeter)."
+}
+}
+}
+
+var rectanglesAreCool = Rectangle.init()
+
+rectanglesAreCool.name
+
+```
+f. (BONUS) What happens when you run the code below?  Explain why.
 ```swift
 var myShapes = [Shape]()
 
@@ -99,6 +210,8 @@ myShapes.append(Rectangle())
 for shape in myShapes {
     print("This is a \(shape.name) with an area of \(shape.area) and a perimeter of \(shape.perimeter)")
 }
+
+**** it's going to print tice because there are only two elements in my array
 ```
 
 ## Question 6
