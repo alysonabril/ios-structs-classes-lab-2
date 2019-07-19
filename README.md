@@ -7,10 +7,17 @@ Using the Room struct below, write code that demonstrates that it is a value typ
 
 ```swift
 struct Room {
-     let maxOccupancy: Int
-     let length: Double
-     let width: Double
+let maxOccupancy: Int
+let length: Double
+let width: Double
 }
+
+var someRoom = Room.init(maxOccupancy: 234, length: 2.0, width: 2.0)
+var anotherRoom = someRoom
+
+someRoom = Room.init(maxOccupancy: 45, length: 2.0, width: 1.0)
+print(anotherRoom)
+
 ```
 
 ## Question 2
